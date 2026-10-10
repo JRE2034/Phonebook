@@ -1,0 +1,146 @@
+
+def menu_():
+    menuq_ = ogmenuq_()
+
+
+    while menuq_:
+
+        if menuq_ == '1':
+            main()
+
+        if menuq_ == '2':
+            viewcontacts()
+
+        if menuq_ == '3':
+            search_contacts()
+
+        if menuq_ == '4':
+            deletecontact_()
+
+        if menuq_ =='5':
+            quit_()
+            break
+
+        else:
+            print (f'\nInvalid option, please select one of the below:\n')
+
+        menuq_ = ogmenuq_()    
+            
+
+    
+
+
+def ogmenuq_():
+    menuq_ = input('What option would you like to pick:\n1) Add contact \n2) View all contacts \n3) Search contacts \n4) Delete contact \n5) Quit')
+    return menuq_
+    
+def deletecontact_():
+    whichuser_ = input ('Which user would you like to delete\n')
+    for x in contactlist_:
+        if x ['Name'] == whichuser_:
+            contactlist_.remove (x)
+            print (f' {whichuser_} has been deleted. Your updated list: {contactlist_}\n')
+            break
+    else:
+        print ('This user does not exist.\n')
+
+
+def quit_():
+        print ('You have picked option 5 "QUIT". Thanks and goodbye.')
+
+        
+    
+
+def viewcontacts():
+    print ('You have selected to view all contacts')
+    for x in contactlist_:
+        print (x)    
+    
+
+def search_contacts():
+    contactQ_ = input ('What is the NAME of the person you would like to search?\n')
+    for x in contactlist_:
+        if x ['Name'] == contactQ_:
+            print (x)
+            break
+    else:
+        print ('This person does not exist in the contact list. Please try and search again \n')
+        contactQ_ = input ('What is the name of the person you would like to search?\n')
+    
+
+
+
+
+contactlist_ = []
+
+def main():
+    namefunc_ = contactname()
+    dateofbirthfunc_ = dateofbirth_()
+    mobilefunc_ = mobilenumber_()
+    addressfunc_ = address_()
+
+
+    contactlistdict = {
+   'Name': namefunc_,
+   'Date of Birth': dateofbirthfunc_,
+   'Number': mobilefunc_,
+   'Address': addressfunc_
+   }
+
+
+    contactlist_.append (contactlistdict)
+
+
+
+
+def contactname():
+    nameq_= input('what is your full name?\n')
+    while nameq_ == '' or not nameq_.replace(' ', '').isalpha():
+        print ('Please enter a valid name\n')
+        nameq_= input('what is your full name?\n')
+    return nameq_
+    
+
+def dateofbirth_():
+    while True:
+        try:
+            ageq_ = int(input('How old are you?\n'))
+            if ageq_ < 0:
+                print ('Age invalid\n')
+                continue
+            elif ageq_ > 100:
+                print ('You are too old\n')
+                continue 
+            break    
+        except ValueError:
+                    print ('Invalid: Please enter a number\n')
+    return ageq_
+
+
+def mobilenumber_():
+    numberq_ = input('What is your number?\n')
+    while len (numberq_) !=10 or not numberq_.isnumeric():
+        print ('Invalid: Numbers only and 10 digits.\n')
+        numberq_ = input('What is your number?\n')
+    return numberq_
+   
+
+def address_():
+    accomnumb_ = input ('What is your address? Firstly, please enter your house / flat number\n')
+    while accomnumb_ == '' or not accomnumb_.replace(' ', '').isdigit():
+        print ('Please enter valid house / flat number')
+        accomnumb_ = input ('What is your address? Firstly, please enter your house / flat number\n')
+    streetnameq_ = input ('Please enter your street name\n')
+    while streetnameq_ == '' or not streetnameq_.replace(' ', '').isalpha():
+        print ('Please enter a valid street name')
+        streetnameq_ = input ('Please enter your street name\n')
+    postcodeq_ = input ('Please enter your post code?\n')
+    while postcodeq_ == '' or len (postcodeq_) !=4 or not postcodeq_.isdigit():
+        print ('Please enter a valid post code')
+        postcodeq_ = input ('Please enter your post code\n')
+    return (f'{accomnumb_} {streetnameq_} {postcodeq_}')
+
+    
+
+
+menu_()
